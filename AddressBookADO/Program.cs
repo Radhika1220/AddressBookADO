@@ -73,7 +73,13 @@ namespace AddressBookADO
                 case 12:
                     eRRepoistory.SortedtheirNameUsingERDiagram(addrBook);
                     break;
-          }
+                case 13:
+                    Transcation transcation = new Transcation();
+                    //transcation.AlterTableaddStartDate();
+                    Transcation transcation1 = new Transcation();
+                    transcation1.UpdateStartDateValueBasedOnContctId();
+                    break;
+            }
         }
     }
 }
