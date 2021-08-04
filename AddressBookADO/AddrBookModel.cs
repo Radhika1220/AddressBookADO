@@ -19,5 +19,7 @@ namespace AddressBookADO
 
         public string addrBookName { get; set; }
         public string relationType { get; set; }
+
+        public string contactTypeName { get; set; }
     }
 }

@@ -7,10 +7,12 @@ namespace TestValidation
     public class UnitTest1
     {
         AddrBookRepo addrBookRepo;
+        ERRepoistory eRRepoistory;
         [TestInitialize]
         public void Setup()
         {
             addrBookRepo = new AddrBookRepo();
+            eRRepoistory = new ERRepoistory();
         }
         /// <summary>
         /// UC1&UC2-Retrieve the data using query and returns the count
@@ -71,7 +73,7 @@ namespace TestValidation
         [TestMethod]
         public void TestMethodForRetrieveDataBasedOnCityAndState()
         {
-            int expected = 2;
+            int expected = 1;
             AddrBookModel model = new AddrBookModel();
             var actual = addrBookRepo.RetrieveDataBasedOnStateAndCity(model);
             Assert.AreEqual(expected, actual);
@@ -82,7 +84,7 @@ namespace TestValidation
         [TestMethod]
         public void TestMethodForCountGroupByCityAndState()
         {
-            var expected= "1 Karanataka Bangalore 2 TamilNadu Chennai 2 Maharashtra Mumbai ";
+            var expected= "1 Karanataka Bangalore 1 TamilNadu Chennai 2 Maharashtra Mumbai ";
             AddrBookModel model = new AddrBookModel();
             var actual = addrBookRepo.RetrieveCountGroupByStateAndCity(model);
             Assert.AreEqual(expected, actual);
@@ -104,9 +106,54 @@ namespace TestValidation
         [TestMethod]
         public void TestMethodForCountRelationType()
         {
-            var expected = "2 Family 2 Friend 1 Profession ";
+            var expected = "1 Family 2 Friend 1 Profession ";
             AddrBookModel model = new AddrBookModel();
             var actual = addrBookRepo.CountRelationType(model);
+            Assert.AreEqual(expected, actual);
+        }
+        //------------------Implementing ER Diagram Relationship------------------
+        /// <summary>
+        /// ----UC6--->Retrieve Person Belonging to  City or State
+        /// </summary>
+        [TestMethod]
+        public void TestMethodForPrintDataBasedOnCityAndStateUisngERRelationship()
+        {
+            int expected = 3;
+            AddrBookModel model = new AddrBookModel();
+            int actual = eRRepoistory.PrintDataBasedOnCityAndStateUisngERRelationship(model);
+            Assert.AreEqual(expected, actual);
+        }
+        /// <summary>
+        /// ----UC7--->Size of state and city
+        /// </summary>
+        [TestMethod]
+        public void TestMethodForCountCityAndStateUsingERRelationship()
+        {
+            var expected = "1 Karnataka Bangalore 2 Tamil Nadu Chennai 1 Maharashtra Mumbai ";
+            AddrBookModel model = new AddrBookModel();
+            var actual = eRRepoistory.CountStateAndCityUsingERDiagram(model);
+            Assert.AreEqual(expected, actual);
+        }
+        /// <summary>
+        /// -----UC8--->Retrieve the person data entries sorted alphabetically
+        /// </summary>
+        [DataTestMethod]
+        public void SortedTheirNameUsingERRelationship()
+        {
+            int expected = 5;
+            AddrBookModel model = new AddrBookModel();
+            int actual = eRRepoistory.SortedtheirNameUsingERDiagram(model);
+            Assert.AreEqual(expected, actual);
+        }
+        /// <summary>
+        /// ---	UC9--->Get Number Of contact persons by type
+        /// </summary>
+        [TestMethod]
+        public void TestMethodForRelationTypeUsingERRelationship()
+        {
+            var expected = "2 Family 2 Friends 1 Profession ";
+            AddrBookModel model = new AddrBookModel();
+            var actual = eRRepoistory.CountTypeNameUsingERDiagram(model);
             Assert.AreEqual(expected, actual);
         }
     }

@@ -9,6 +9,7 @@ namespace AddressBookADO
             Console.WriteLine("*******Address Book System Using ADO***********");
 
             AddrBookRepo addrBookRepo = new AddrBookRepo();
+            ERRepoistory eRRepoistory = new ERRepoistory();
             AddrBookModel addrBook = new AddrBookModel();
             Console.WriteLine("1.Connecting to DB And Retrieve the data from sql server");
             Console.WriteLine("2.Insert into table");
@@ -18,6 +19,11 @@ namespace AddressBookADO
             Console.WriteLine("6.Retrieve Count Group By State And City");
             Console.WriteLine("7.Sort the name alphabetically and based on city also");
             Console.WriteLine("8.Count the RealtionType");
+            Console.WriteLine("************Implementing ER Diagram RelationShip");
+            Console.WriteLine("9.Retrieve the data based on state and city");
+            Console.WriteLine("10.Count of State And City");
+            Console.WriteLine("11.Count the relationtype");
+            Console.WriteLine("12.Sorted Alphabetically by name");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -55,7 +61,18 @@ namespace AddressBookADO
                 case 8:
                     addrBookRepo.CountRelationType(addrBook);
                     break;
-
+                case 9:
+                    eRRepoistory.PrintDataBasedOnCityAndStateUisngERRelationship(addrBook);
+                    break;
+                case 10:
+                    eRRepoistory.CountStateAndCityUsingERDiagram(addrBook);
+                    break;
+                case 11:
+                    eRRepoistory.CountTypeNameUsingERDiagram(addrBook);
+                    break;
+                case 12:
+                    eRRepoistory.SortedtheirNameUsingERDiagram(addrBook);
+                    break;
           }
         }
     }
