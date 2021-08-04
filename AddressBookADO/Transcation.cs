@@ -4,7 +4,9 @@ using System.Data.SqlClient;
 using System.Text;
 
 namespace AddressBookADO
-{
+{/// <summary>
+/// ------------------------------Transcation Related Opeartions---------------------------------------------------
+/// </summary>
     public class Transcation
     {
         //Give path for Database Connection
@@ -46,6 +48,10 @@ namespace AddressBookADO
             SqlConnection.Close();
             return result;
         }
+        /// <summary>
+        /// Set the value for date field column in Contact_Person
+        /// </summary>
+        /// <returns></returns>
         public int UpdateStartDateValueBasedOnContctId()
         {
             int count = 0;
@@ -127,6 +133,47 @@ namespace AddressBookADO
             SqlConnection.Close();
             return count;
         }
-
+        /// <summary>
+        /// Insert into tables using transcation
+        /// </summary>
+        /// <returns></returns>
+        public int InsertIntoTablesUsingTranscation()
+        {
+            //Setting the flag to zero
+            int flag = 0;
+            SqlConnection.Open();
+            using (SqlConnection)
+            {
+                //Begin SQL transaction
+                SqlTransaction sqlTransaction = SqlConnection.BeginTransaction();
+                SqlCommand sqlCommand = SqlConnection.CreateCommand();
+                sqlCommand.Transaction = sqlTransaction;
+                try
+                {
+                    //----------this two tables have relationship if record is inserted in one table,the another table also have relationship to insert--------------------
+                    //Insert data into Table(Contact_Person)
+                    sqlCommand.CommandText = "Insert into Contact_Person values(1,'Praveen','Kumar','Ranganathan Street','Hyderabad','Telangana',600115,9874587411,'praveen12@yahoo.com','2020-01-09')";
+                    sqlCommand.ExecuteNonQuery();
+                    //Insert (Relation_Type) Table
+                    sqlCommand.CommandText = "Insert into Relation_Type values(1,5)";
+                    //Execute the particular query
+                    sqlCommand.ExecuteNonQuery();
+                    //Commit the transaction if non-conflict occurs
+                    sqlTransaction.Commit();
+                    Console.WriteLine("Inserted Successfully!");
+                    //Setting the falg to 1--->Inserted Data  successfully
+                  flag = 1;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    //Rollback if any error occurs--->Transcation should not be done(Comes back to previous state)
+                    sqlTransaction.Rollback();
+                   flag = 0;
+                }
+            }
+            SqlConnection.Close();
+            return flag;
+        }
     }
 }

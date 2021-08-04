@@ -9,6 +9,9 @@ namespace TestValidation
         AddrBookRepo addrBookRepo;
         ERRepoistory eRRepoistory;
         Transcation transcation;
+        /// <summary>
+        /// Initializing the object for every time for testmethod
+        /// </summary>
         [TestInitialize]
         public void Setup()
         {
@@ -158,6 +161,7 @@ namespace TestValidation
             var actual = eRRepoistory.CountTypeNameUsingERDiagram(model);
             Assert.AreEqual(expected, actual);
         }
+        //---------------------------------------Implementing Transcation----------------------------------------------------------
         /// <summary>
         ///  Adding a Date Column in Contact_Person
         /// </summary>
@@ -176,6 +180,16 @@ namespace TestValidation
         {
             int expected = 2;
             int actual = transcation.RetrieveDataBasedOnDateRange();
+            Assert.AreEqual(expected, actual);
+        }
+        /// <summary>
+        ///  Insert into tables using transcation
+        /// </summary>
+        [DataTestMethod]
+        public void TestMethodForInsertIntoTablesUsingTranscation()
+        {
+            int expected = 1;
+            int actual = transcation.InsertIntoTablesUsingTranscation();
             Assert.AreEqual(expected, actual);
         }
     }

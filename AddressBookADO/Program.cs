@@ -27,6 +27,7 @@ namespace AddressBookADO
             Console.WriteLine("12.Sorted Alphabetically by name");
             Console.WriteLine("13.Adding a date field column and update the values");
             Console.WriteLine("14.Retrieve Details based on Date Range");
+            Console.WriteLine("15.Insert into tables using transcation");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -83,6 +84,9 @@ namespace AddressBookADO
                     break;
                 case 14:
                     transcation.RetrieveDataBasedOnDateRange();
+                    break;
+                case 15:
+                    transcation.InsertIntoTablesUsingTranscation();
                     break;
             }
         }
