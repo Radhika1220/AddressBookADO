@@ -65,6 +65,9 @@ namespace TestValidation
             var actual = addrBookRepo.DeleteParticularContact(addrBook);
             Assert.AreEqual(expected, actual);
         }
+        /// <summary>
+        /// UC6-Retrieve Data Based on City and State
+        /// </summary>
         [TestMethod]
         public void TestMethodForRetrieveDataBasedOnCityAndState()
         {

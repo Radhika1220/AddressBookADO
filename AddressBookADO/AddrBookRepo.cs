@@ -180,6 +180,11 @@ namespace AddressBookADO
             return count;
 
         }
+        /// <summary>
+        /// UC6-Retrieve Data Based on City and State
+        /// </summary>
+        /// <param name="addressBook"></param>
+        /// <returns></returns>
         public int RetrieveDataBasedOnStateAndCity(AddrBookModel addressBook)
         {
             int count = 0;
@@ -187,13 +192,14 @@ namespace AddressBookADO
             {
                 using (sqlConnection)
                 {
-                    //Query Execution(Delete)
+                    //Query Execution
                     string query = @"Select FirstName,LastName from Address_Book_Table where City = 'Chennai' or StateName = 'TamilNadu'";
                     //Passing the query and dbconnection
                     SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
                     //Opening the connection
                     sqlConnection.Open();
                     int result = sqlCommand.ExecuteNonQuery();
+                    //SqlDataReader
                     SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                     if (sqlDataReader.HasRows)
                     {
@@ -205,8 +211,7 @@ namespace AddressBookADO
                             Console.WriteLine("FirstName :{0}\t LastName:{1}\t ", addressBook.firstName, addressBook.lastName);
                         }
                     }
-                }
-                
+                }                
             }
             catch (Exception ex)
             {
