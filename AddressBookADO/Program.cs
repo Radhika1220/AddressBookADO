@@ -11,6 +11,7 @@ namespace AddressBookADO
             AddrBookRepo addrBookRepo = new AddrBookRepo();
             ERRepoistory eRRepoistory = new ERRepoistory();
             AddrBookModel addrBook = new AddrBookModel();
+            Transcation transcation = new Transcation();
             Console.WriteLine("1.Connecting to DB And Retrieve the data from sql server");
             Console.WriteLine("2.Insert into table");
             Console.WriteLine("3.Edit the existing contact using update query");
@@ -24,6 +25,8 @@ namespace AddressBookADO
             Console.WriteLine("10.Count of State And City");
             Console.WriteLine("11.Count the relationtype");
             Console.WriteLine("12.Sorted Alphabetically by name");
+            Console.WriteLine("13.Adding a date field column and update the values");
+            Console.WriteLine("14.Retrieve Details based on Date Range");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -74,10 +77,12 @@ namespace AddressBookADO
                     eRRepoistory.SortedtheirNameUsingERDiagram(addrBook);
                     break;
                 case 13:
-                    Transcation transcation = new Transcation();
                     //transcation.AlterTableaddStartDate();
-                    Transcation transcation1 = new Transcation();
-                    transcation1.UpdateStartDateValueBasedOnContctId();
+         
+                    transcation.UpdateStartDateValueBasedOnContctId();
+                    break;
+                case 14:
+                    transcation.RetrieveDataBasedOnDateRange();
                     break;
             }
         }
