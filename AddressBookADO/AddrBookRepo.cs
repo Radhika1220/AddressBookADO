@@ -267,6 +267,50 @@ namespace AddressBookADO
             }
             return list;
         }
+        /// <summary>
+        /// UC8-Retrieve Data Sorted Alphabetically by Name for a City
+        /// </summary>
+        /// <param name="addressBook"></param>
+        /// <returns></returns>
+        public int RetrieveDataBySortedAlphabetically(AddrBookModel addressBook)
+        {
+            int count = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                    //Query Execution
+                    string query = @"Select FirstName,LastName from Address_Book_Table where City='Mumbai' order by FirstName";
+                    //Passing the query and dbconnection
+                    SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+                    //Opening the connection
+                    sqlConnection.Open();
+                    int result = sqlCommand.ExecuteNonQuery();
+                    //SqlDataReader
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            count++;
+                            addressBook.firstName = Convert.ToString(sqlDataReader["FirstName"]);
+                            addressBook.lastName = Convert.ToString(sqlDataReader["LastName"]);
+                            Console.WriteLine("FirstName :{0}\t LastName:{1}\t ", addressBook.firstName, addressBook.lastName);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                //closes the connection
+                sqlConnection.Close();
+            }
+            return count;
+        }
         //Display the details
         public void DisplayDetails(SqlDataReader sqlDataReader)
         {

@@ -87,5 +87,16 @@ namespace TestValidation
             var actual = addrBookRepo.RetrieveCountGroupByStateAndCity(model);
             Assert.AreEqual(expected, actual);
         }
+        /// <summary>
+        /// UC8-Retrieve Data Sorted Alphabetically by Name for a City
+        /// </summary>
+        [TestMethod]
+        public void TestMethodForSortAlphabeticallyByNameAndGivenCity()
+        {
+            int expected = 2;
+            AddrBookModel model = new AddrBookModel();
+            var actual = addrBookRepo.RetrieveDataBySortedAlphabetically(model);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
