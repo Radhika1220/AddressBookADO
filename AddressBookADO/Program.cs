@@ -13,6 +13,7 @@ namespace AddressBookADO
             Console.WriteLine("1.Connecting to DB And Retrieve the data from sql server");
             Console.WriteLine("2.Insert into table");
             Console.WriteLine("3.Edit the existing contact using update query");
+            Console.WriteLine("4.Delete the Contact");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -34,6 +35,9 @@ namespace AddressBookADO
                     break;
                 case 3:
                     addrBookRepo.EditExistingContact(addrBook);
+                    break;
+                case 4:
+                    addrBookRepo.DeleteParticularContact(addrBook);
                     break;
         }
         }

@@ -141,6 +141,40 @@ namespace AddressBookADO
                 sqlConnection.Close();
             }
             return count;
+        }
+        public int DeleteParticularContact(AddrBookModel addressBook)
+        {
+            int count = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                    //Query Execution(Delete)
+                    string query = @"delete from Address_Book_Table where FirstName = 'Sakthi' and LastName = 'Rajan'";
+                    //Passing the query and dbconnection
+                    SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+                    //Opening the connection
+                    sqlConnection.Open();
+                    int result = sqlCommand.ExecuteNonQuery();
+                    if (result != 0)
+                    {
+                        count++;
+                        Console.WriteLine("Deleted SuccessFully");
+                        
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                //closes the connection
+                sqlConnection.Close();
+            }
+            return count;
 
         }
 
