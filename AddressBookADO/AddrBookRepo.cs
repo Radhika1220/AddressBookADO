@@ -223,9 +223,50 @@ namespace AddressBookADO
                 sqlConnection.Close();
             }
             return count;
-
         }
-
+        /// <summary>
+        /// UC7-Size Of addressBook by City and State
+        /// </summary>
+        /// <param name="addressBook"></param>
+        /// <returns></returns>
+        public string RetrieveCountGroupByStateAndCity(AddrBookModel addressBook)
+        {
+            string list = null;
+            try
+            {
+                using (sqlConnection)
+                {
+                    //Query Execution
+                    string query = @"Select Count(*) As Count, StateName, City from Address_Book_Table group by StateName,City";
+                    //Passing the query and dbconnection
+                    SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+                    //Opening the connection
+                    sqlConnection.Open();
+                    int result = sqlCommand.ExecuteNonQuery();
+                    //SqlDataReader
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                         
+                            Console.WriteLine("Count :{0}\t StateName:{1}\t City :{2}\t", sqlDataReader[0],sqlDataReader[1],sqlDataReader[2]);
+                            list += sqlDataReader[0] + " " + sqlDataReader[1] + " " + sqlDataReader[2] + " ";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                //closes the connection
+                sqlConnection.Close();
+            }
+            return list;
+        }
         //Display the details
         public void DisplayDetails(SqlDataReader sqlDataReader)
         {

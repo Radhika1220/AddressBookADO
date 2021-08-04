@@ -76,5 +76,16 @@ namespace TestValidation
             var actual = addrBookRepo.RetrieveDataBasedOnStateAndCity(model);
             Assert.AreEqual(expected, actual);
         }
+        /// <summary>
+        /// UC7-Size Of addressBook by City and State
+        /// </summary>
+        [TestMethod]
+        public void TestMethodForCountGroupByCityAndState()
+        {
+            var expected= "1 Karanataka Bangalore 2 TamilNadu Chennai 2 Maharashtra Mumbai ";
+            AddrBookModel model = new AddrBookModel();
+            var actual = addrBookRepo.RetrieveCountGroupByStateAndCity(model);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
