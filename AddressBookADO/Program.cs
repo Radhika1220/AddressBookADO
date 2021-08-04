@@ -14,6 +14,7 @@ namespace AddressBookADO
             Console.WriteLine("2.Insert into table");
             Console.WriteLine("3.Edit the existing contact using update query");
             Console.WriteLine("4.Delete the Contact");
+            Console.WriteLine("5.Retrieve Data Based on City And State");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -39,7 +40,10 @@ namespace AddressBookADO
                 case 4:
                     addrBookRepo.DeleteParticularContact(addrBook);
                     break;
-        }
+                case 5:
+                    addrBookRepo.RetrieveDataBasedOnStateAndCity(addrBook);
+                    break;
+          }
         }
     }
 }

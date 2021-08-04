@@ -54,12 +54,23 @@ namespace TestValidation
             var actual = addrBookRepo.EditExistingContact(addrBook);
             Assert.AreEqual(expected, actual);
         }
+        /// <summary>
+        /// UC5-Delete the contact using name
+        /// </summary>
         [TestMethod]
         public void TestMethodForDeleteContactUsingName()
         {
             int expected = 1;
             AddrBookModel addrBook = new AddrBookModel();
             var actual = addrBookRepo.DeleteParticularContact(addrBook);
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void TestMethodForRetrieveDataBasedOnCityAndState()
+        {
+            int expected = 2;
+            AddrBookModel model = new AddrBookModel();
+            var actual = addrBookRepo.RetrieveDataBasedOnStateAndCity(model);
             Assert.AreEqual(expected, actual);
         }
     }
