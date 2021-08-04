@@ -104,6 +104,46 @@ namespace AddressBookADO
             }
             return count;
         }
+        /// <summary>
+        /// UC4-Edit the existing Contact For Address_Book_Table
+        /// </summary>
+        /// <param name="addressBook"></param>
+        /// <returns></returns>
+        public int EditExistingContact(AddrBookModel addressBook)
+        {
+            int count = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                 //Query Execution(Update)
+                    string query = @"update Address_Book_Table set EmailId='logi123@gmail.com' where FirstName='Logeswari'";
+                    //Passing the query and dbconnection
+                    SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+                    //Opening the connection
+                    sqlConnection.Open();
+                    int result = sqlCommand.ExecuteNonQuery();
+                    if (result != 0)
+                    {
+                        count++;
+                        Console.WriteLine("Updated SuccessFully");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                //closes the connection
+                sqlConnection.Close();
+            }
+            return count;
+
+        }
+
         //Display the details
         public void DisplayDetails(SqlDataReader sqlDataReader)
         {

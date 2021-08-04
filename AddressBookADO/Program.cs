@@ -12,6 +12,7 @@ namespace AddressBookADO
             AddrBookModel addrBook = new AddrBookModel();
             Console.WriteLine("1.Connecting to DB And Retrieve the data from sql server");
             Console.WriteLine("2.Insert into table");
+            Console.WriteLine("3.Edit the existing contact using update query");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -30,6 +31,9 @@ namespace AddressBookADO
                     addrBook.addrBookName = "Cousin";
                     addrBook.relationType = "Family";
                     addrBookRepo.InsertIntoTable(addrBook);
+                    break;
+                case 3:
+                    addrBookRepo.EditExistingContact(addrBook);
                     break;
         }
         }
