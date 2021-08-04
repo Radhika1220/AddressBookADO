@@ -311,6 +311,49 @@ namespace AddressBookADO
             }
             return count;
         }
+        /// <summary>
+        ///  UC10-Get Count By RelationType
+        /// </summary>
+        /// <param name="addressBook"></param>
+        /// <returns></returns>
+        public string CountRelationType(AddrBookModel addressBook)
+        {
+            string list = null;
+            try
+            {
+                using (sqlConnection)
+                {
+                    //Query Execution
+                    string query = @"Select count(*) as CountType, RelationType from Address_Book_Table group by RelationType";
+                    //Passing the query and dbconnection
+                    SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+                    //Opening the connection
+                    sqlConnection.Open();
+                    int result = sqlCommand.ExecuteNonQuery();
+                    //SqlDataReader
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+
+                            Console.WriteLine("CountType : {0}\tRelationType : {1}", sqlDataReader[0], sqlDataReader[1]);
+                            list += sqlDataReader[0] + " " + sqlDataReader[1] + " ";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                //closes the connection
+                sqlConnection.Close();
+            }
+            return list;
+        }
         //Display the details
         public void DisplayDetails(SqlDataReader sqlDataReader)
         {

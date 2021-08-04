@@ -98,5 +98,16 @@ namespace TestValidation
             var actual = addrBookRepo.RetrieveDataBySortedAlphabetically(model);
             Assert.AreEqual(expected, actual);
         }
+        /// <summary>
+        /// UC10-Get Count By RelationType
+        /// </summary>
+        [TestMethod]
+        public void TestMethodForCountRelationType()
+        {
+            var expected = "2 Family 2 Friend 1 Profession ";
+            AddrBookModel model = new AddrBookModel();
+            var actual = addrBookRepo.CountRelationType(model);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

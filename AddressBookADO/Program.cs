@@ -17,6 +17,7 @@ namespace AddressBookADO
             Console.WriteLine("5.Retrieve Data Based on City And State");
             Console.WriteLine("6.Retrieve Count Group By State And City");
             Console.WriteLine("7.Sort the name alphabetically and based on city also");
+            Console.WriteLine("8.Count the RealtionType");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -50,6 +51,9 @@ namespace AddressBookADO
                     break;
                 case 7:
                     addrBookRepo.RetrieveDataBySortedAlphabetically(addrBook);
+                    break;
+                case 8:
+                    addrBookRepo.CountRelationType(addrBook);
                     break;
 
           }
