@@ -192,5 +192,13 @@ namespace TestValidation
             int actual = transcation.InsertIntoTablesUsingTranscation();
             Assert.AreEqual(expected, actual);
         }
+        [DataTestMethod]
+        public void TestMethod_ImplementingThread()
+        {
+           bool expected=true;
+            var actual = transcation.ImplementingUsingThread();
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }

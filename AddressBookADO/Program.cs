@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AddressBookADO
 {
@@ -7,7 +8,7 @@ namespace AddressBookADO
         static void Main(string[] args)
         {
             Console.WriteLine("*******Address Book System Using ADO***********");
-
+            List<AddrBookModel> list = new List<AddrBookModel>();
             AddrBookRepo addrBookRepo = new AddrBookRepo();
             ERRepoistory eRRepoistory = new ERRepoistory();
             AddrBookModel addrBook = new AddrBookModel();
@@ -87,6 +88,10 @@ namespace AddressBookADO
                     break;
                 case 15:
                     transcation.InsertIntoTablesUsingTranscation();
+                    break;
+              
+                case 16:
+                    transcation.ImplementingUsingThread();
                     break;
             }
         }

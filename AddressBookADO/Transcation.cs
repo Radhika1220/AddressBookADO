@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AddressBookADO
 {/// <summary>
@@ -13,6 +16,7 @@ namespace AddressBookADO
         public static string connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AddressBookSystem;Integrated Security=True;";
         //Represents a connection to Sql Server Database
         SqlConnection SqlConnection = new SqlConnection(connection);
+        List<AddrBookModel> addrList = new List<AddrBookModel>();
         /// <summary>
         /// Adding a Date Column in Contact_Person
         /// </summary>
@@ -160,8 +164,9 @@ namespace AddressBookADO
                     sqlCommand.ExecuteNonQuery();
                     //Commit the transaction if non-conflict occurs
                     sqlTransaction.Commit();
+              
                     Console.WriteLine("Inserted Successfully!");
-                    //Setting the falg to 1--->Inserted Data  successfully
+                    //Setting the flag to 1--->Inserted Data  successfully
                   flag = 1;
                 }
                 catch (Exception ex)
@@ -174,6 +179,73 @@ namespace AddressBookADO
             }
             SqlConnection.Close();
             return flag;
+        }
+
+        public void AddMultipleDataToList()
+        {
+            try
+            {
+                string query = @"select AddressBookName,FirstName,LastName,Address,City,StateName,ZipCode,PhoneNum,EmailId,ContactTypeName from AddressBook
+     Full JOIN Contact_Person on AddressBook.AddressBookID = Contact_Person.AddressBook_ID
+   Full JOIN Relation_Type on Relation_Type.Contact_ID = Contact_Person.ContactID
+    Full JOIN Contact_Type on Relation_Type.ContactType_ID = Contact_Type.ContactTypeID";
+                SqlCommand sqlCommand = new SqlCommand(query, this.SqlConnection);
+                SqlConnection.Open();
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                if (sqlDataReader.HasRows)
+                {
+                    while (sqlDataReader.Read())
+                    {
+                        DisplayEmployeeDetails(sqlDataReader); 
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            SqlConnection.Close();      
+        }
+        public bool ImplementingUsingThread()
+        {
+            try { 
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            AddMultipleDataToList();
+            stopWatch.Stop();
+            Console.WriteLine("Duration with Thread excecution : {0} ", stopWatch.ElapsedMilliseconds);
+            int elapsedTime = Convert.ToInt32(stopWatch.ElapsedMilliseconds);
+            if (elapsedTime != 0)
+            {
+                return true;
+            }
+        }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            return false;
+        }
+        public void DisplayEmployeeDetails(SqlDataReader sqlDataReader)
+        {
+            AddrBookModel addressBook = new AddrBookModel();
+            addressBook.firstName = Convert.ToString(sqlDataReader["FirstName"]);
+            addressBook.lastName = Convert.ToString(sqlDataReader["LastName"]);
+            addressBook.address = Convert.ToString(sqlDataReader["Address"]);
+            addressBook.city = Convert.ToString(sqlDataReader["City"]);
+            addressBook.stateName = Convert.ToString(sqlDataReader["StateName"]);
+            addressBook.zipCode = Convert.ToString(sqlDataReader["ZipCode"]);
+            addressBook.phoneNum = Convert.ToInt64(sqlDataReader["PhoneNum"]);
+            addressBook.emailId = Convert.ToString(sqlDataReader["EmailId"]);
+            addressBook.addrBookName = Convert.ToString(sqlDataReader["AddressBookName"]);
+            addressBook.contactTypeName = Convert.ToString(sqlDataReader["ContactTypeName"]);
+            Thread thread = new Thread(() =>
+            {
+                Console.WriteLine("{0} \t {1} \t {2} \t {3} \t {4} \t {5} \t {6} {7}\t {8}\t {9}\t", addressBook.firstName, addressBook.lastName, addressBook.address, addressBook.city, addressBook.stateName, addressBook.zipCode, addressBook.phoneNum,addressBook.emailId,addressBook.addrBookName,addressBook.contactTypeName);
+                addrList.Add(addressBook);
+            });
+            thread.Start();
         }
     }
 }
